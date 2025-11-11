@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import orange.pay.orange_pay.models.Transaction;
+import orange.pay.orange_pay.web.dto.request.TransactionRequest;
 import orange.pay.orange_pay.web.dto.response.HistoriqueTransactionResponse;
 import orange.pay.orange_pay.web.dto.response.TransactionOneResponse;
 
@@ -21,5 +22,12 @@ public interface TransactionMapper {
     @Mapping(target = "nomDestinataire", source = "destinataire.nom")
     @Mapping(target = "numeroDestinataire", source = "destinataire.telephone")
     TransactionOneResponse toTransactionOneResponse(Transaction transaction);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "source", ignore = true)
+    @Mapping(target = "destinataire", ignore = true)
+    Transaction toTransactionEntity(TransactionRequest transactionRequest);
 
 }
