@@ -18,9 +18,9 @@ public class TransactionController extends ErrorManagementController implements 
     private final ITransactionService transactionService;
 
     @Override
-    public ResponseEntity<Map<String, Object>> getAllHistoriqueTransaction() {
+    public ResponseEntity<Map<String, Object>> getAllHistoriqueTransaction(String numero) {
         try {
-            List<HistoriqueTransactionResponse> transactions = transactionService.getHistoriqueTransaction();
+            List<HistoriqueTransactionResponse> transactions = transactionService.getHistoriqueTransaction(numero);
 
             if (transactions == null || transactions.isEmpty()) {
                 return noContentResponse("liste vide");
