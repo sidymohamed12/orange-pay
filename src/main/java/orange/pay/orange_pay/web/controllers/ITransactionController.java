@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/api/transaction")
+@RequestMapping("/api/transactions")
 public interface ITransactionController {
 
     @GetMapping("/historique/{numero}")
