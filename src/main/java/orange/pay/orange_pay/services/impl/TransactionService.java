@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import orange.pay.orange_pay.repository.ICompteRepository;
 import orange.pay.orange_pay.repository.ITransactionRepository;
 import orange.pay.orange_pay.services.ITransactionService;
 import orange.pay.orange_pay.utils.exceptions.ResourceNotFound;
@@ -18,7 +17,6 @@ import orange.pay.orange_pay.web.mappers.TransactionMapper;
 @RequiredArgsConstructor
 public class TransactionService implements ITransactionService {
     private final ITransactionRepository transactionRepository;
-    private final ICompteRepository compteRepository;
     private final TransactionMapper transactionMapper;
 
     @Override
