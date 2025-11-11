@@ -41,7 +41,7 @@ public class TransactionService implements ITransactionService {
     }
 
     private String getNomCompteByNumero(@NonNull String numero) {
-        return compteRepository.findByNumero(numero)
+        return compteRepository.findByTelephone(numero)
                 .map(cpt -> cpt.getNom() + " " + cpt.getPrenom())
                 .orElseThrow(() -> new ResourceNotFound("Compte not found with numero " + numero));
     }
