@@ -1,6 +1,7 @@
 package orange.pay.orange_pay.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import orange.pay.orange_pay.models.enums.TypeTransaction;
@@ -11,7 +12,9 @@ import orange.pay.orange_pay.models.enums.TypeTransaction;
 public class Transaction extends AbstractEntity {
     private TypeTransaction typeTransaction;
     private Double montant;
-    private String numeroSource;
-    private String numeroDestinataire;
+    @ManyToOne
+    private Compte source;
+    @ManyToOne
+    private Compte destinataire;
     private String ref;
 }

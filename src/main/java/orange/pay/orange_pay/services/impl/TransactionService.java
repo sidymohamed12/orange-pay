@@ -18,7 +18,7 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public List<HistoriqueTransactionResponse> getHistoriqueTransaction(String numero) {
-        return transactionRepository.findAllByNumeroSource(numero)
+        return transactionRepository.findAllBySource_Telephone(numero)
                 .stream()
                 .map(transactionMapper::toHistoriqueTransactionResponse)
                 .toList();

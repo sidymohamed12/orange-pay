@@ -12,6 +12,7 @@ public interface TransactionMapper {
 
     TransactionMapper INTANCE = Mappers.getMapper(TransactionMapper.class);
 
+    @Mapping(target = "numeroDestinataire", source = "destinataire.telephone")
     @Mapping(target = "date", source = "createdAt")
     HistoriqueTransactionResponse toHistoriqueTransactionResponse(Transaction transaction);
 

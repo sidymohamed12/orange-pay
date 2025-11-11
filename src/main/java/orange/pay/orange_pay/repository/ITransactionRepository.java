@@ -8,5 +8,6 @@ import orange.pay.orange_pay.models.Transaction;
 
 public interface ITransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findAllByNumeroSource(String numeroSource);
+    List<Transaction> findAllBySource_Telephone(String sourceTelephone);
+    
 }
