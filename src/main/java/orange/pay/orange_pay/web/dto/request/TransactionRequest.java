@@ -11,5 +11,4 @@ public class TransactionRequest {
     private Double montant;
     private Long sourceId;
     private Long destinataireId;
-    private String ref;
 }

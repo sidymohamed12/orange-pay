@@ -1,5 +1,7 @@
 package orange.pay.orange_pay.services.impl;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -55,12 +57,21 @@ public class TransactionService implements ITransactionService {
         Transaction transaction = transactionMapper.toTransactionEntity(transactionRequest);
         transaction.setSource(source);
         transaction.setDestinataire(destinataire);
+        transaction.setRef(genererReferenceTransaction());
         return transactionMapper.toHistoriqueTransactionResponse(transactionRepository.save(transaction));
     }
 
     private Compte getCompteByIdWithException(@NonNull Long id) {
         return compteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Compte not found with id " + id));
+    }
+
+    private String genererReferenceTransaction() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+        String timestampPart = LocalDateTime.now().format(formatter);
+
+        return "TRF-" + timestampPart;
     }
 
 }

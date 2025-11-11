@@ -28,6 +28,7 @@ public interface TransactionMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "source", ignore = true)
     @Mapping(target = "destinataire", ignore = true)
+    @Mapping(target = "ref", ignore = true)
     Transaction toTransactionEntity(TransactionRequest transactionRequest);
 
 }
