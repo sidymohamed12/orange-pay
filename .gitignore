@@ -1,0 +1,59 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+.git
+
+# === Build output ===
+# Ignore tous les dossiers target dans tous les services
+**/target/
+**/out/
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Logs & Temp ===
+*.log
+*.tmp
+*.bak
+
+# === Maven Wrapper ===
+.mvn/
+!/.mvn/wrapper/
+mvnw
+mvnw.cmd
+
+# === Environment files ===
+.env
+*.env
+.env.*
