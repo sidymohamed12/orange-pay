@@ -18,7 +18,6 @@ import orange.pay.orange_pay.web.mappers.TransactionMapper;
 @RequiredArgsConstructor
 public class TransactionService implements ITransactionService {
     private final ITransactionRepository transactionRepository;
-    private final ICompteRepository compteRepository;
     private final TransactionMapper transactionMapper;
 
     @Override
@@ -32,17 +31,8 @@ public class TransactionService implements ITransactionService {
     @Override
     public TransactionOneResponse getTransactionById(@NonNull Long id) {
         return transactionRepository.findById(id)
-                .map(transac -> {
-                    TransactionOneResponse transaction = transactionMapper.toTransactionOneResponse(transac);
-                    transaction.setNomDestinataire(getNomCompteByNumero(transac.getNumeroDestinataire()));
-                    return transaction;
-                })
+                .map(transactionMapper::toTransactionOneResponse)
                 .orElseThrow(() -> new ResourceNotFound("Transaction not found with id " + id));
     }
 
-    private String getNomCompteByNumero(@NonNull String numero) {
-        return compteRepository.findByTelephone(numero)
-                .map(cpt -> cpt.getNom() + " " + cpt.getPrenom())
-                .orElseThrow(() -> new ResourceNotFound("Compte not found with numero " + numero));
-    }
 }
