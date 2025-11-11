@@ -49,8 +49,8 @@ public class TransactionMock implements CommandLineRunner {
                 Transaction t1 = new Transaction();
                 t1.setTypeTransaction(TypeTransaction.TRANFERT);
                 t1.setMontant(10000.0 + (i * 2000));
-                t1.setNumeroSource(source.getTelephone());
-                t1.setNumeroDestinataire(dest1.getTelephone());
+                t1.setSource(source);
+                t1.setDestinataire(dest1);
                 t1.setRef("TRF-" + UUID.randomUUID().toString().substring(0, 8));
                 transactions.add(t1);
 
@@ -58,8 +58,8 @@ public class TransactionMock implements CommandLineRunner {
                 Transaction t2 = new Transaction();
                 t2.setTypeTransaction(TypeTransaction.PAYEMENT);
                 t2.setMontant(8000.0 + (i * 1500));
-                t2.setNumeroSource(dest2.getTelephone());
-                t2.setNumeroDestinataire(source.getTelephone());
+                t2.setSource(dest2);
+                t2.setDestinataire(source);
                 t2.setRef("TRF-" + UUID.randomUUID().toString().substring(0, 8));
                 transactions.add(t2);
             }
