@@ -11,5 +11,7 @@ import orange.pay.orange_pay.models.enums.TypeTransaction;
 public class Transaction extends AbstractEntity {
     private TypeTransaction typeTransaction;
     private Double montant;
+    private String numeroSource;
     private String numeroDestinataire;
+    private String ref;
 }
