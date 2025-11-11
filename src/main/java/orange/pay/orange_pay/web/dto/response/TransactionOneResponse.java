@@ -8,10 +8,12 @@ import orange.pay.orange_pay.models.enums.TypeTransaction;
 
 @Getter
 @Setter
-public class HistoriqueTransactionResponse {
+public class TransactionOneResponse {
     private Long id;
     private TypeTransaction typeTransaction;
     private Double montant;
     private String numeroDestinataire;
+    private String nomDestinataire;
     private LocalDateTime date;
+    private String ref;
 }
