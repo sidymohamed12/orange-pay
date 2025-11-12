@@ -41,7 +41,7 @@ public class TransactionController extends ErrorManagementController implements 
     public ResponseEntity<Map<String, Object>> getTransactionById(Long id) {
         try {
 
-            var transaction = transactionService.getTransactionById(id);
+            var transaction = transactionService.findById(id);
 
             return okResponse(transaction, "TransactionOneResponse");
 

@@ -35,7 +35,7 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public TransactionOneResponse getTransactionById(@NonNull Long id) {
+    public TransactionOneResponse findById(@NonNull Long id) {
         return transactionRepository.findById(id)
                 .map(transactionMapper::toTransactionOneResponse)
                 .orElseThrow(() -> new ResourceNotFound("Transaction not found with id " + id));
@@ -50,8 +50,8 @@ public class TransactionService implements ITransactionService {
             throw new IllegalArgumentException("Source and destinataire IDs must not be null");
         }
 
-        Compte destinataire = compteService.getCompteById(destinataireId);
-        Compte source = compteService.getCompteById(sourceId);
+        Compte destinataire = compteService.findById(destinataireId);
+        Compte source = compteService.findById(sourceId);
 
         compteService.verifySolde(source, transactionRequest.getMontant());
         compteService.updateCompteDestinataire(destinataire, transactionRequest.getMontant());

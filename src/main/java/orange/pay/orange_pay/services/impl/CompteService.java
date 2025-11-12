@@ -16,7 +16,7 @@ public class CompteService implements ICompteService {
     private final ICompteRepository compteRepository;
 
     @Override
-    public Compte getCompteById(@NonNull Long id) {
+    public Compte findById(@NonNull Long id) {
         return compteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFound("Compte not found with id " + id));
     }
