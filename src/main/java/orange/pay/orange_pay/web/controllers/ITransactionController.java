@@ -14,9 +14,6 @@ import orange.pay.orange_pay.web.dto.request.TransactionRequest;
 @RequestMapping("/api/transactions")
 public interface ITransactionController {
 
-    @GetMapping("/historique/{numero}")
-    ResponseEntity<Map<String, Object>> getAllHistoriqueTransaction(@PathVariable(value = "numero") String numero);
-
     @GetMapping("/{id}")
     ResponseEntity<Map<String, Object>> getTransactionById(@PathVariable(value = "id") Long id);
 
