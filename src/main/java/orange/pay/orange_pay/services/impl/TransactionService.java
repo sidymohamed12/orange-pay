@@ -10,8 +10,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import orange.pay.orange_pay.models.Compte;
 import orange.pay.orange_pay.models.Transaction;
-import orange.pay.orange_pay.repository.ICompteRepository;
 import orange.pay.orange_pay.repository.ITransactionRepository;
+import orange.pay.orange_pay.services.ICompteService;
 import orange.pay.orange_pay.services.ITransactionService;
 import orange.pay.orange_pay.utils.exceptions.ResourceNotFound;
 import orange.pay.orange_pay.web.dto.request.TransactionRequest;
@@ -22,8 +22,8 @@ import orange.pay.orange_pay.web.mappers.TransactionMapper;
 @Service
 @RequiredArgsConstructor
 public class TransactionService implements ITransactionService {
+    private final ICompteService compteService;
     private final ITransactionRepository transactionRepository;
-    private final ICompteRepository compteRepository;
     private final TransactionMapper transactionMapper;
 
     @Override
@@ -50,20 +50,19 @@ public class TransactionService implements ITransactionService {
             throw new IllegalArgumentException("Source and destinataire IDs must not be null");
         }
 
-        Compte source = getCompteByIdWithException(sourceId);
+        Compte destinataire = compteService.getCompteById(destinataireId);
+        Compte source = compteService.getCompteById(sourceId);
 
-        Compte destinataire = getCompteByIdWithException(destinataireId);
+        compteService.verifySolde(source, transactionRequest.getMontant());
+        compteService.updateCompteDestinataire(destinataire, transactionRequest.getMontant());
+        compteService.updateCompteSource(source, transactionRequest.getMontant());
 
         Transaction transaction = transactionMapper.toTransactionEntity(transactionRequest);
         transaction.setSource(source);
         transaction.setDestinataire(destinataire);
         transaction.setRef(genererReferenceTransaction());
-        return transactionMapper.toHistoriqueTransactionResponse(transactionRepository.save(transaction));
-    }
 
-    private Compte getCompteByIdWithException(@NonNull Long id) {
-        return compteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Compte not found with id " + id));
+        return transactionMapper.toHistoriqueTransactionResponse(transactionRepository.save(transaction));
     }
 
     private String genererReferenceTransaction() {

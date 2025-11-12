@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import orange.pay.orange_pay.core.ErrorManagementController;
 import orange.pay.orange_pay.services.ITransactionService;
 import orange.pay.orange_pay.utils.exceptions.ResourceNotFound;
+import orange.pay.orange_pay.utils.exceptions.SoldeInsufisant;
 import orange.pay.orange_pay.web.controllers.ITransactionController;
 import orange.pay.orange_pay.web.dto.request.TransactionRequest;
 import orange.pay.orange_pay.web.dto.response.HistoriqueTransactionResponse;
@@ -60,7 +61,7 @@ public class TransactionController extends ErrorManagementController implements 
 
             return createdResponse(transaction, "HistoriqueTransactionResponse");
 
-        } catch (DataIntegrityViolationException e) {
+        } catch (SoldeInsufisant | DataIntegrityViolationException e) {
             return badRequestResponse(BAD_REQUEST + e.getMessage());
 
         } catch (Exception e) {
