@@ -47,7 +47,7 @@ public class TransactionMock implements CommandLineRunner {
 
                 // 🔹 1er transfert (source → dest1)
                 Transaction t1 = new Transaction();
-                t1.setTypeTransaction(TypeTransaction.TRANFERT);
+                t1.setTypeTransaction(TypeTransaction.TRANSFERT);
                 t1.setMontant(10000.0 + (i * 2000));
                 t1.setSource(source);
                 t1.setDestinataire(dest1);
