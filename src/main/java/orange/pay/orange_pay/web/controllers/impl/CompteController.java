@@ -19,17 +19,13 @@ public class CompteController extends ErrorManagementController implements IComp
 
     @Override
     public ResponseEntity<Map<String, Object>> getHistoriqueTransactionCompte(String numero) {
-        try {
-            List<HistoriqueTransactionResponse> transactions = transactionService.getHistoriqueTransaction(numero);
+        List<HistoriqueTransactionResponse> transactions = transactionService.getHistoriqueTransaction(numero);
 
-            if (transactions == null || transactions.isEmpty()) {
-                return noContentResponse("liste vide");
-            }
-
-            return okResponse(transactions, "HistoriqueTransactionResponse");
-
-        } catch (Exception e) {
-            return internalErrorResponse(e.getMessage());
+        if (transactions == null || transactions.isEmpty()) {
+            return noContentResponse("liste vide");
         }
+
+        return okResponse(transactions, "HistoriqueTransactionResponse");
+
     }
 }

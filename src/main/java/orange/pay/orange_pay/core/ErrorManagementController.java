@@ -15,6 +15,7 @@ public class ErrorManagementController {
     protected static final String INTERNAL_ERROR = "Erreur interne du serveur : ";
     protected static final String SERVICE_UNAVAILABLE = "Service dépendant indisponible : ";
     protected static final String BAD_REQUEST = "Données invalides ou contrainte violée : ";
+    protected static final String TIME_OUT = "Le service n’a pas répondu à temps : ";
 
     // ✅ 200 - OK
     protected ResponseEntity<Map<String, Object>> okResponse(Object data, String type) {

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import orange.pay.orange_pay.models.Compte;
@@ -42,6 +43,7 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
+    @Transactional
     public HistoriqueTransactionResponse createTransaction(TransactionRequest transactionRequest) {
         Long sourceId = transactionRequest.getSourceId();
         Long destinataireId = transactionRequest.getDestinataireId();
