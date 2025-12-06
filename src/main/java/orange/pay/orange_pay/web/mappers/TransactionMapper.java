@@ -19,7 +19,7 @@ public interface TransactionMapper {
     HistoriqueTransactionResponse toHistoriqueTransactionResponse(Transaction transaction);
 
     @Mapping(target = "date", source = "createdAt")
-    @Mapping(target = "nomDestinataire", source = "destinataire.nom")
+    @Mapping(target = "nomDestinataire", source = "destinataire.user.nom")
     @Mapping(target = "numeroDestinataire", source = "destinataire.telephone")
     TransactionOneResponse toTransactionOneResponse(Transaction transaction);
 

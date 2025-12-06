@@ -19,7 +19,7 @@ import orange.pay.orange_pay.repository.ITransactionRepository;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-@Order(2)
+@Order(3)
 public class TransactionMock implements CommandLineRunner {
 
     private final ITransactionRepository transactionRepository;
@@ -33,7 +33,7 @@ public class TransactionMock implements CommandLineRunner {
             List<Compte> comptes = compteRepository.findAll();
 
             if (comptes.isEmpty()) {
-                log.info("⚠️ Aucun compte trouvé en base. Impossible de créer des transactions !");
+                System.out.println("⚠️ Aucun compte trouvé !");
                 return;
             }
 
@@ -41,32 +41,33 @@ public class TransactionMock implements CommandLineRunner {
             int size = comptes.size();
 
             for (int i = 0; i < size; i++) {
+
                 Compte source = comptes.get(i);
                 Compte dest1 = comptes.get((i + 1) % size);
-                Compte dest2 = comptes.get((i + 2) % size);
 
-                // 🔹 1er transfert (source → dest1)
+                // 🔹 transaction 1 : TRANSFERT
                 Transaction t1 = new Transaction();
                 t1.setTypeTransaction(TypeTransaction.TRANSFERT);
-                t1.setMontant(10000.0 + (i * 2000));
+                t1.setMontant(15000.0 + (i * 5000));
                 t1.setSource(source);
                 t1.setDestinataire(dest1);
                 t1.setRef("TRF-" + UUID.randomUUID().toString().substring(0, 8));
+
                 transactions.add(t1);
 
-                // 🔹 2e transfert (dest2 → source)
+                // 🔹 transaction 2 : PAYEMENT
                 Transaction t2 = new Transaction();
                 t2.setTypeTransaction(TypeTransaction.PAYEMENT);
-                t2.setMontant(8000.0 + (i * 1500));
-                t2.setSource(dest2);
+                t2.setMontant(7000.0 + (i * 3000));
+                t2.setSource(dest1);
                 t2.setDestinataire(source);
-                t2.setRef("TRF-" + UUID.randomUUID().toString().substring(0, 8));
+                t2.setRef("PAY-" + UUID.randomUUID().toString().substring(0, 8));
+
                 transactions.add(t2);
             }
 
             transactionRepository.saveAll(transactions);
-            log.info("✅ " + transactions.size() + " transactions mock sauvegardées en base !");
+            System.out.println("✅ " + transactions.size() + " transactions mock générées !");
         }
     }
-
 }
