@@ -38,18 +38,19 @@ public class GlobalExceptionHandler extends ErrorManagementController {
                 .build();
     }
 
-    private ResponseEntity<ApiError> response(HttpStatus status, String message, String type, Exception ex) {
+    private ResponseEntity<ApiError> response(HttpStatus status, String message, String type) {
 
         ApiError error = buildApiError(status, message, type);
 
         // 🔥 Logging avancé
-        log.error(
-                "\n================= ERROR INTERNAL LOG =================" +
-                        "\nCorrelation ID: {}" +
-                        "\nType: {}" +
-                        "\nMessage: {}" +
-                        "\n======================================================",
-                error.getCorrelationId(), type, message, ex);
+        log.error("""
+                ================= ERROR INTERNAL LOG =================
+                Correlation ID: {}
+                Type: {}
+                Message: {}
+                =======================================
+                """,
+                error.getCorrelationId(), type, message);
 
         return new ResponseEntity<>(error, status);
     }
@@ -66,70 +67,67 @@ public class GlobalExceptionHandler extends ErrorManagementController {
     @ExceptionHandler(ResourceNotFound.class)
     public ResponseEntity<ApiError> handleResourceNotFound(ResourceNotFound ex) {
         logError(ex);
-        return response(HttpStatus.NOT_FOUND, ex.getMessage(), "NOT_FOUND", ex);
+        return response(HttpStatus.NOT_FOUND, ex.getMessage(), "NOT_FOUND");
     }
 
     // 400 - Solde insuffisant
     @ExceptionHandler(SoldeInsufisant.class)
     public ResponseEntity<ApiError> handleSoldeInsuffisant(SoldeInsufisant ex) {
         logError(ex);
-        return response(HttpStatus.BAD_REQUEST, ex.getMessage(), "BAD_REQUEST", ex);
+        return response(HttpStatus.BAD_REQUEST, ex.getMessage(), "BAD_REQUEST");
     }
 
     // 400 - Violations d’intégrité (données invalides, contrainte DB)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ApiError> handleDataIntegrity(DataIntegrityViolationException ex) {
         logError(ex);
-        return response(HttpStatus.BAD_REQUEST, BAD_REQUEST + ex.getMessage(), "DATA_INTEGRITY", ex);
+        return response(HttpStatus.BAD_REQUEST, BAD_REQUEST + ex.getMessage(), "DATA_INTEGRITY");
     }
 
     // 403 - AccessDenied
     @ExceptionHandler(HttpClientErrorException.Forbidden.class)
     public ResponseEntity<ApiError> handleAccessDenied(HttpClientErrorException.Forbidden ex) {
         logError(ex);
-        return response(HttpStatus.FORBIDDEN, NO_ACCESS + ex.getMessage(), "FORBIDDEN", ex);
+        return response(HttpStatus.FORBIDDEN, NO_ACCESS + ex.getMessage(), "FORBIDDEN");
     }
 
     // 401 - Authentication failed
     @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
     public ResponseEntity<ApiError> handleBadCredentials(HttpClientErrorException.Unauthorized ex) {
         logError(ex);
-        return response(HttpStatus.UNAUTHORIZED, NO_AUTHENTIFICATE + ex.getMessage(), "UNAUTHORIZED", ex);
+        return response(HttpStatus.UNAUTHORIZED, NO_AUTHENTIFICATE + ex.getMessage(), "UNAUTHORIZED");
     }
 
     // 503 - Service indisponible (microservice down)
     @ExceptionHandler(ConnectException.class)
     public ResponseEntity<ApiError> handleServiceUnavailable(ConnectException ex) {
         logError(ex);
-        return response(HttpStatus.SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE + ex.getMessage(), "SERVICE_UNAVAILABLE",
-                ex);
+        return response(HttpStatus.SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE + ex.getMessage(), "SERVICE_UNAVAILABLE");
     }
 
     @ExceptionHandler(DataAccessResourceFailureException.class)
     public ResponseEntity<ApiError> handleDataAccessResourceFailure(DataAccessResourceFailureException ex) {
         logError(ex);
-        return response(HttpStatus.SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE + ex.getMessage(), "SERVICE_UNAVAILABLE",
-                ex);
+        return response(HttpStatus.SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE + ex.getMessage(), "SERVICE_UNAVAILABLE");
     }
 
     @ExceptionHandler(CannotCreateTransactionException.class)
     public ResponseEntity<ApiError> handleCannotCreateTransaction(CannotCreateTransactionException ex) {
         logError(ex);
-        return response(HttpStatus.SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE + ex.getMessage(), "SERVICE_UNAVAILABLE",
-                ex);
+        return response(HttpStatus.SERVICE_UNAVAILABLE, SERVICE_UNAVAILABLE + ex.getMessage(), "SERVICE_UNAVAILABLE");
     }
 
     // 408 - timeout
     @ExceptionHandler(ResourceAccessException.class)
     public ResponseEntity<ApiError> handleResourceAccess(ResourceAccessException ex) {
         logError(ex);
-        return response(HttpStatus.REQUEST_TIMEOUT, TIME_OUT + ex.getMessage(), "REQUEST_TIMEOUT", ex);
+        return response(HttpStatus.REQUEST_TIMEOUT, TIME_OUT + ex.getMessage(), "REQUEST_TIMEOUT");
     }
 
     // 500 - Toutes les autres exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGlobalException(Exception ex) {
         logError(ex);
-        return response(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_ERROR + ex.getMessage(), "INTERNAL_ERROR", ex);
+        return response(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_ERROR + ex.getMessage(), "INTERNAL_ERROR");
     }
 }
